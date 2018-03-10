@@ -24,16 +24,16 @@ object AlphabetCipher {
 
   def encode(keyword: String, message: String): String = {
     val extKeyword = extendToLength(keyword, message.length)
-    (extKeyword zip message).map((addChars _).tupled).mkString
+    (extKeyword, message).zipped.map(addChars).mkString
   }
 
   def decode(keyword: String, message: String): String = {
     val extKeyword = extendToLength(keyword, message.length)
-    (extKeyword zip message).map((subChars _).tupled).mkString
+    (extKeyword, message).zipped.map(subChars).mkString
   }
 
   def decipher(cipher: String, message: String): String = {
-    val loopedKeyword = (message zip cipher).map((subChars _).tupled).mkString
+    val loopedKeyword = (message, cipher).zipped.map(subChars).mkString
     shortestWord(loopedKeyword)
   }
 }
