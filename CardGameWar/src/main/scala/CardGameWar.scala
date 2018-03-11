@@ -24,7 +24,14 @@ object CardGameWar {
   }
 
   def playRound(player1: Card, player2: Card): Card = {
-    ??? // Winning Card
+    val r1 = ranks.indexOf(player1.rank)
+    val r2 = ranks.indexOf(player2.rank)
+    val s1 = suits.indexOf(player1.suit)
+    val s2 = suits.indexOf(player2.suit)
+    if (r1 > r2 || (r1 == r2 && s1 > s2))
+      player1
+    else
+      player2
   }
 
   def playGame(player1: Player, player2: Player): String = {
