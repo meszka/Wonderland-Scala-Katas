@@ -1,3 +1,4 @@
+import scala.annotation.tailrec
 import scala.util.Random
 
 case class Card(suit: String, rank: String)
@@ -34,9 +35,30 @@ object CardGameWar {
       player2
   }
 
-  def playGame(player1: Player, player2: Player): String = {
-    ??? // Winner of Game
+  def nextRound(player1: Player, player2: Player): (Player, Player) = {
+    val card1 = player1.deck.cards.head
+    val card2 = player2.deck.cards.head
+    val winningCard = playRound(card1, card2)
+    if (winningCard == card1)
+      (
+        player1.copy(deck = Deck(player1.deck.cards.tail :+ card1 :+ card2)),
+        player2.copy(deck = Deck(player2.deck.cards.tail))
+      )
+    else
+      (
+        player1.copy(deck = Deck(player1.deck.cards.tail)),
+        player2.copy(deck = Deck(player2.deck.cards.tail :+ card2 :+ card1))
+      )
   }
 
+  @tailrec
+  def playGame(player1: Player, player2: Player): String = {
+    (player1.deck, player2.deck) match {
+      case (_, Deck(List())) => player1.name
+      case (Deck(List()), _) => player2.name
+      case _ =>
+        val (newPlayer1, newPlayer2) =  nextRound(player1, player2)
+        playGame(newPlayer1, newPlayer2)
+    }
+  }
 }
-
