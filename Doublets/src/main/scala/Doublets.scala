@@ -11,12 +11,16 @@ object Doublets {
 
   def bfs(start: String, target: String): List[String] = {
     def aux(queue: List[List[String]]): List[String] = {
-      val path = queue.head
-      val current  = path.head
-      if (current == target)
-        path.reverse
-      else
-        aux(queue.tail ++ neighboors(current).map(_ :: path))
+      if (queue.isEmpty)
+        List()
+      else {
+        val path = queue.head
+        val current  = path.head
+        if (current == target)
+          path.reverse
+        else
+          aux(queue.tail ++ neighboors(current).map(_ :: path))
+      }
     }
     aux(List(List(start)))
   }
