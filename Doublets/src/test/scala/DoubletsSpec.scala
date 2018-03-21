@@ -10,7 +10,7 @@ class DoubletsSpec extends WordSpec {
       assert(doublets("wheat", "bread") == Seq("wheat", "cheat", "cheap", "cheep", "creep", "creed", "breed", "bread"))
     }
     "with no word links found" in {
-      assert(doublets("ye", "freezer") == Seq(""))
+      assert(doublets("ye", "freezer") == Seq())
     }
   }
 }
