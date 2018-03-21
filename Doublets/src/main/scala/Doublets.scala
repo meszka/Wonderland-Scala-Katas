@@ -1,7 +1,7 @@
 import scala.io.Source
 
 object Doublets {
-  val dictionary = Source.fromResource("words.txt").getLines.toSeq
+  val dictionary = Source.fromResource("words_big.txt").getLines.toSeq
 
   def distance(word1: String, word2: String): Int =
     (word1, word2).zipped.map(_ == _).count(_ == false)
