@@ -75,5 +75,8 @@ object Doublets {
   def doublets(word1: String, word2: String): Seq[String] =
     bidirectionalBFS(word1, word2)
 
+  def solutionIsCorrect(solution: Seq[String]) =
+    (solution, solution.tail).zipped.forall(distance(_, _) == 1)
+
   def main(args: Array[String]): Unit = println(fullDictionary)
 }
