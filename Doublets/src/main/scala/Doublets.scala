@@ -10,19 +10,25 @@ object Doublets {
     val dictionary = fullDictionary.filter(_.length == start.length)
     def neighboors(word: String): Seq[String] =
       dictionary.filter(distance(_, word) == 1)
-    def aux(queue: List[List[String]]): List[String] = {
+    def aux(queue: List[List[String]], seen: Set[String], steps: Int): List[String] = {
       if (queue.isEmpty)
         List()
       else {
         val path = queue.head
         val current  = path.head
-        if (current == target)
+        if (current == target) {
+          println("steps: " + steps)
           path.reverse
-        else
-          aux(queue.tail ++ neighboors(current).map(_ :: path))
+        }
+        else {
+          val unseenNeighboors = neighboors(current).filterNot(seen.contains)
+          aux(queue.tail ++ unseenNeighboors.map(_ :: path),
+              seen ++ unseenNeighboors,
+              steps + 1)
+        }
       }
     }
-    aux(List(List(start)))
+    aux(List(List(start)), Set(), 0)
   }
 
   def doublets(word1: String, word2: String): Seq[String] =
