@@ -15,7 +15,7 @@ object Doublets {
         List()
       else {
         val path = queue.head
-        val current  = path.head
+        val current = path.head
         if (current == target) {
           println("steps: " + steps)
           path.reverse
